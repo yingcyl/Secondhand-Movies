@@ -1,0 +1,11 @@
+body {
+  background-color: #023047;
+  color: white;
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+.site-header {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 3rem;
+  text-align: center;
+}

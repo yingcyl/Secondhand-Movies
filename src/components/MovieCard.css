@@ -1,0 +1,17 @@
+.movie-card img {
+  width: 250px;
+  height: auto;
+}
+
+.movie-card ul {
+  list-style: none;
+  padding: 0px;
+  margin: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movie-card li {
+  list-style: none;
+}
