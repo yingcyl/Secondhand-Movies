@@ -12,6 +12,7 @@ class MovieCard extends React.Component {
       return <ul key={genre_id}>{genreName}</ul>;
     });
     console.log(release_date.substring(0, 4));
+
     const price = function moviePrice() {
       let moviePrice;
       if (parseInt(release_date.substring(0, 4)) < 2010) {
@@ -46,6 +47,7 @@ class MovieCard extends React.Component {
             {genres}
             {price()}
             {stock()}
+            <button className="ui button buy-button">Buy</button>
           </div>
         </li>
       </div>

@@ -15,3 +15,16 @@
 .movie-card li {
   list-style: none;
 }
+
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.buy-button {
+  width: 40%;
+  background-color: #fb8500 !important;
+  color: white !important;
+}
