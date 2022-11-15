@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 class App extends React.Component {
   state = { movies: [], genre: new Map() };
 
-  onSearchSubmit = (term) => {
+  onSearchInput = (term) => {
     console.log(term);
 
     const request1 = axios.get(
@@ -34,7 +34,7 @@ class App extends React.Component {
         <div>
           <h1 className="site-header">Secondhand Movies</h1>
         </div>
-        <SearchBar onSubmit={this.onSearchSubmit} />
+        <SearchBar onSubmit={this.onSearchInput} />
 
         <MovieList movies={this.state.movies} genres={this.state.genres} />
       </div>
