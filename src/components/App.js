@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import MovieList from "./MovieList";
 import SearchBar from "./SearchBar";
+import Basket from "./Basket";
 
 class App extends React.Component {
   state = { movies: [], genre: new Map() };
@@ -35,6 +36,7 @@ class App extends React.Component {
           <h1 className="site-header">Secondhand Movies</h1>
         </div>
         <SearchBar onSubmit={this.onSearchInput} />
+        <Basket />
 
         <MovieList movies={this.state.movies} genres={this.state.genres} />
       </div>
