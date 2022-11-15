@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
 import MovieList from "./MovieList";
+import SearchBar from "./SearchBar";
 
 class App extends React.Component {
   state = { movies: [], genre: new Map() };
 
-  componentDidMount() {
-    const term = "star";
+  onSearchSubmit = (term) => {
+    console.log(term);
+
     const request1 = axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&query=${term}`
     );
@@ -22,7 +24,9 @@ class App extends React.Component {
         this.setState({ movies: res1.data.results, genres: genres });
       })
     );
-  }
+  };
+
+  componentDidMount() {}
 
   render() {
     return (
@@ -30,6 +34,7 @@ class App extends React.Component {
         <div>
           <h1 className="site-header">Secondhand Movies</h1>
         </div>
+        <SearchBar onSubmit={this.onSearchSubmit} />
 
         <MovieList movies={this.state.movies} genres={this.state.genres} />
       </div>
