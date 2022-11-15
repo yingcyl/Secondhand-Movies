@@ -15,7 +15,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="ui category search">
+      <div className="ui category search" style={{ display: "inline-block" }}>
         <form onSubmit={this.onFormSubmit}>
           <div className="ui icon input">
             <input

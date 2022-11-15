@@ -17,11 +17,19 @@ class Basket extends React.Component {
   render() {
     return (
       <>
-        <Button variant="primary" onClick={this.handleShow}>
+        <Button
+          variant="primary"
+          onClick={this.handleShow}
+          style={{ float: "right" }}
+        >
           <i className="shopping cart icon"></i>
         </Button>
 
-        <Offcanvas show={this.state.show} onHide={this.handleClose}>
+        <Offcanvas
+          placement="end"
+          show={this.state.show}
+          onHide={this.handleClose}
+        >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>Offcanvas</Offcanvas.Title>
           </Offcanvas.Header>
