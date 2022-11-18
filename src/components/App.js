@@ -5,7 +5,13 @@ import SearchBar from "./SearchBar";
 import Basket from "./Basket";
 
 class App extends React.Component {
-  state = { movies: [], genre: new Map() };
+  state = { movies: [], genre: new Map(), stock: {}, price: "" };
+  onClick = (stock, price) => {
+    console.log(price);
+    console.log(stock);
+    this.setState({ stock: stock.stock, price: price.price });
+    // return price, stock;
+  };
 
   onSearchInput = (term) => {
     console.log(term);
@@ -27,8 +33,6 @@ class App extends React.Component {
     );
   };
 
-  componentDidMount() {}
-
   render() {
     return (
       <div>
@@ -36,9 +40,13 @@ class App extends React.Component {
           <h1 className="site-header">Secondhand Movies</h1>
         </div>
         <SearchBar onSubmit={this.onSearchInput} />
-        <Basket />
+        <Basket price={this.state.price} stock={this.state.stock} />
 
-        <MovieList movies={this.state.movies} genres={this.state.genres} />
+        <MovieList
+          movies={this.state.movies}
+          genres={this.state.genres}
+          onClick={this.onClick}
+        />
       </div>
     );
   }

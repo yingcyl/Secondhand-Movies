@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import CartButton from "./CartButton";
 
 class Basket extends React.Component {
   state = { show: false };
@@ -31,11 +32,16 @@ class Basket extends React.Component {
           onHide={this.handleClose}
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            <Offcanvas.Title style={{ color: "black" }}>
+              Offcanvas
+            </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body>
+          <Offcanvas.Body style={{ color: "black" }}>
+            Stock: {this.props.stock}
+            Price: {this.props.price}
             Some text as placeholder. In real life you can have the elements you
             have chosen. Like, text, images, lists, etc.
+            <CartButton onDisplay={this.onDisplay} />
           </Offcanvas.Body>
         </Offcanvas>
       </>

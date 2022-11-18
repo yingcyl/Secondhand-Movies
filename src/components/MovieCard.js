@@ -1,8 +1,23 @@
 import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
 import React from "react";
+import CartButton from "./CartButton";
 import "./MovieCard.css";
 
 class MovieCard extends React.Component {
+  state = { stock: {}, price: "" };
+
+  //   onButtonClick = (price1, stock1) => {
+  //     console.log(price);
+  //     this.props.onClick(this.state.stock);
+  //     this.props.onClick(this.state.price);
+  //   };
+
+  onButtonClick = () => {
+    console.log(this.state.stock);
+    console.log(this.state.price);
+    this.props.onClick(this.state.stock, this.state.price);
+  };
+
   render() {
     const { poster_path, title, release_date, id, genre_ids, popularity } =
       this.props.movie;
@@ -11,7 +26,6 @@ class MovieCard extends React.Component {
       // lists within lists will need unique keys as well
       return <ul key={genre_id}>{genreName}</ul>;
     });
-    console.log(release_date.substring(0, 4));
 
     const price = function moviePrice() {
       let moviePrice;
@@ -28,10 +42,10 @@ class MovieCard extends React.Component {
       let movieStock;
       if (id > 50000) {
         movieStock = 10;
-        return <ul>In stock: {movieStock}</ul>;
+        return <ul>{movieStock}</ul>;
       } else {
         movieStock = 6;
-        return <ul>In stock: {movieStock}</ul>;
+        return <ul>{movieStock}</ul>;
       }
     };
 
@@ -47,7 +61,40 @@ class MovieCard extends React.Component {
             {genres}
             {price()}
             {stock()}
-            <button className="ui button buy-button">Buy</button>
+            {/* <CartButton
+              price={price()}
+              stock={stock()}
+              onClick={() => {
+                console.log(stock().props.children);
+                this.setState({
+                  stock: stock().props.children,
+                  price: price().props.children,
+                });
+              }}
+              onButtonClick={this.onButtonClick}
+            /> */}
+
+            <button
+              className="ui button buy-button"
+              onClick={(e) => {
+                console.log(stock().props.children);
+                this.setState(
+                  {
+                    stock: stock().props.children,
+                    price: price().props.children,
+                  },
+                  // callback for when setstate is complete, code didn't work when this.props.onclick is done outside of the setstae function
+                  () => {
+                    console.log(this.state.stock);
+                    console.log(this.state.price);
+                    this.props.onClick(this.state.stock, this.state.price);
+                  }
+                );
+                this.onButtonClick();
+              }}
+            >
+              Add to cart
+            </button>
           </div>
         </li>
       </div>
