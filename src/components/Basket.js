@@ -38,7 +38,7 @@ class Basket extends React.Component {
           </Offcanvas.Header>
           <Offcanvas.Body style={{ color: "black" }}>
             Stock: {this.props.stock}
-            Price: {this.props.price}
+            Price: {this.props.prices}
             Some text as placeholder. In real life you can have the elements you
             have chosen. Like, text, images, lists, etc.
             <CartButton onDisplay={this.onDisplay} />

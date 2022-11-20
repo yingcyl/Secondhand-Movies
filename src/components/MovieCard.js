@@ -1,10 +1,13 @@
-import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
+import {
+  toHaveDisplayValue,
+  toHaveStyle,
+} from "@testing-library/jest-dom/dist/matchers";
 import React from "react";
 import CartButton from "./CartButton";
 import "./MovieCard.css";
 
 class MovieCard extends React.Component {
-  state = { stock: {}, price: "" };
+  state = { stock: this.props.stock, price: this.props.price };
 
   //   onButtonClick = (price1, stock1) => {
   //     console.log(price);
@@ -12,10 +15,10 @@ class MovieCard extends React.Component {
   //     this.props.onClick(this.state.price);
   //   };
 
-  onButtonClick = () => {
-    console.log(this.state.stock);
-    console.log(this.state.price);
-    this.props.onClick(this.state.stock, this.state.price);
+  onButtonClick = (movie) => {
+    // const updatedStock = this.state.stock - 1;
+    // this.setState({ stock: updatedStock });
+    this.props.onClick(movie);
   };
 
   render() {
@@ -26,28 +29,35 @@ class MovieCard extends React.Component {
       // lists within lists will need unique keys as well
       return <ul key={genre_id}>{genreName}</ul>;
     });
+    // const stock = this.props.stock.map((stock) => {
+    //   return <ul>{stock}</ul>;
+    // });
 
-    const price = function moviePrice() {
-      let moviePrice;
-      if (parseInt(release_date.substring(0, 4)) < 2010) {
-        moviePrice = "£5.99";
-        return <ul>{moviePrice}</ul>;
-      } else {
-        moviePrice = "£8.99";
-        return <ul>{moviePrice}</ul>;
-      }
-    };
+    // const price = this.props.price.map((stock) => {
+    //   return <ul>{price}</ul>;
+    // });
 
-    const stock = function movieStock() {
-      let movieStock;
-      if (id > 50000) {
-        movieStock = 10;
-        return <ul>{movieStock}</ul>;
-      } else {
-        movieStock = 6;
-        return <ul>{movieStock}</ul>;
-      }
-    };
+    // const price = function moviePrice() {
+    //   let moviePrice;
+    //   if (parseInt(release_date.substring(0, 4)) < 2010) {
+    //     moviePrice = "£5.99";
+    //     return <ul>{moviePrice}</ul>;
+    //   } else {
+    //     moviePrice = "£8.99";
+    //     return <ul>{moviePrice}</ul>;
+    //   }
+    // };
+
+    // const stock = function movieStock() {
+    //   let movieStock;
+    //   if (id > 50000) {
+    //     movieStock = 10;
+    //     return <ul>{movieStock}</ul>;
+    //   } else {
+    //     movieStock = 6;
+    //     return <ul>{movieStock}</ul>;
+    //   }
+    // };
 
     return (
       <div className="movie-card">
@@ -59,8 +69,8 @@ class MovieCard extends React.Component {
             <ul>{title}</ul>
             <ul>{release_date}</ul>
             {genres}
-            {price()}
-            {stock()}
+            <ul>{this.props.price}</ul>
+            <ul>{this.props.stock}</ul>
             {/* <CartButton
               price={price()}
               stock={stock()}
@@ -76,22 +86,7 @@ class MovieCard extends React.Component {
 
             <button
               className="ui button buy-button"
-              onClick={(e) => {
-                console.log(stock().props.children);
-                this.setState(
-                  {
-                    stock: stock().props.children,
-                    price: price().props.children,
-                  },
-                  // callback for when setstate is complete, code didn't work when this.props.onclick is done outside of the setstae function
-                  () => {
-                    console.log(this.state.stock);
-                    console.log(this.state.price);
-                    this.props.onClick(this.state.stock, this.state.price);
-                  }
-                );
-                this.onButtonClick();
-              }}
+              onClick={() => this.onButtonClick(this.props.movie)}
             >
               Add to cart
             </button>

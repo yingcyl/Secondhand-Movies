@@ -5,12 +5,39 @@ import SearchBar from "./SearchBar";
 import Basket from "./Basket";
 
 class App extends React.Component {
-  state = { movies: [], genre: new Map(), stock: {}, price: "" };
-  onClick = (stock, price) => {
-    console.log(price);
-    console.log(stock);
-    this.setState({ stock: stock.stock, price: price.price });
-    // return price, stock;
+  state = {
+    movies: [],
+    genres: new Map(),
+    stock: new Map(),
+    prices: new Map(),
+    cart: new Map(),
+  };
+
+  onClick = (movie) => {
+    const currentStock = this.state.stock.get(movie.id);
+    const updatedStock = currentStock - 1;
+    this.setState(
+      { stock: new Map([...this.state.stock, [movie.id, updatedStock]]) },
+      console.log(this.state.stock)
+    );
+
+    this.setState({ cart: {} });
+  };
+
+  moviePrice = (movie) => {
+    if (parseInt(movie.release_date.substring(0, 4)) < 2010) {
+      return "£5.99";
+    } else {
+      return "£8.99";
+    }
+  };
+
+  movieStock = (movie) => {
+    if (movie.id > 50000) {
+      return 10;
+    } else {
+      return 6;
+    }
   };
 
   onSearchInput = (term) => {
@@ -27,8 +54,33 @@ class App extends React.Component {
       axios.spread((...res) => {
         const res1 = res[0];
         const res2 = res[1];
-        const genres = new Map(res2.data.genres.map((i) => [i.id, i.name]));
-        this.setState({ movies: res1.data.results, genres: genres });
+        const genres = new Map(
+          res2.data.genres.map((genre) => [genre.id, genre.name])
+        );
+        const movies = res1.data.results;
+        const movieStock = new Map(
+          movies.map((movie) => [movie.id, this.movieStock(movie)])
+        );
+        const moviePrices = new Map(
+          movies.map((movie) => [movie.id, this.moviePrice(movie)])
+        );
+
+        this.setState(
+          {
+            movies: movies,
+            genres: genres,
+            stock: movieStock,
+            prices: moviePrices,
+          },
+          () => {
+            console.log(
+              this.state.movies,
+              this.state.genres,
+              this.state.stock,
+              this.state.price
+            );
+          }
+        );
       })
     );
   };
@@ -40,11 +92,13 @@ class App extends React.Component {
           <h1 className="site-header">Secondhand Movies</h1>
         </div>
         <SearchBar onSubmit={this.onSearchInput} />
-        <Basket price={this.state.price} stock={this.state.stock} />
+        <Basket prices={this.state.prices} stock={this.state.stock} />
 
         <MovieList
           movies={this.state.movies}
           genres={this.state.genres}
+          stock={this.state.stock}
+          prices={this.state.prices}
           onClick={this.onClick}
         />
       </div>
