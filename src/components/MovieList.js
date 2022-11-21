@@ -3,19 +3,8 @@ import Basket from "./Basket";
 import MovieCard from "./MovieCard";
 
 class MovieList extends React.Component {
-  //   state = { stock: {}, price: "" };
-
-  //   onClick = (stock, price) => {
-  //     this.setState({ stock: stock, price: price });
-  //     this.props.onClick(this.state.stock, this.state.price);
-  //   };
-
   render() {
     const movies = this.props.movies.map((movie) => {
-      // const genres = movie.genre_ids.map((id) => {
-      //   const genreName = props.genres.get(id);
-      //   return genreName;
-      // });(
       const movieStock = this.props.stock[movie.id];
       const moviePrice = this.props.prices[movie.id];
 
