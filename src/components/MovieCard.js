@@ -18,14 +18,14 @@ class MovieCard extends React.Component {
   onButtonClick = (movie) => {
     // const updatedStock = this.state.stock - 1;
     // this.setState({ stock: updatedStock });
-    this.props.onClick(movie);
+    this.props.onAddToCart(movie);
   };
 
   render() {
     const { poster_path, title, release_date, id, genre_ids, popularity } =
       this.props.movie;
     const genres = genre_ids.map((genre_id) => {
-      const genreName = this.props.genre.get(genre_id);
+      const genreName = this.props.genre[genre_id];
       // lists within lists will need unique keys as well
       return <ul key={genre_id}>{genreName}</ul>;
     });

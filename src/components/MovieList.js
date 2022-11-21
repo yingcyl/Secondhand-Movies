@@ -16,8 +16,8 @@ class MovieList extends React.Component {
       //   const genreName = props.genres.get(id);
       //   return genreName;
       // });(
-      const movieStock = this.props.stock.get(movie.id);
-      const moviePrice = this.props.prices.get(movie.id);
+      const movieStock = this.props.stock[movie.id];
+      const moviePrice = this.props.prices[movie.id];
 
       if (
         movie.poster_path === null ||
@@ -33,7 +33,7 @@ class MovieList extends React.Component {
             genre={this.props.genres}
             stock={movieStock}
             price={moviePrice}
-            onClick={this.props.onClick}
+            onAddToCart={this.props.onAddToCart}
           />
         );
       }
