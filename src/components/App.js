@@ -32,16 +32,39 @@ class App extends React.Component {
   };
 
   getMoviePrice = (movie) => {
-    if (parseInt(movie.release_date.substring(0, 4)) < 2010) {
+    const movieDate = parseInt(movie.release_date.substring(0, 4));
+    if (movieDate > 2000 && movieDate < 2015) {
       return "£5.99";
+    } else if (movieDate >= 2015) {
+      return "£6.99";
+    } else if (movieDate > 1980 && movieDate <= 2000) {
+      return "£4.99";
+    } else if (movieDate > 1960 && movieDate <= 1980) {
+      return "£3.99";
+    } else if (movieDate > 1940 && movieDate <= 1960) {
+      return "£2.99";
     } else {
-      return "£8.99";
+      return "£2.59";
     }
   };
 
   getMovieStock = (movie) => {
-    if (movie.id > 50000) {
-      return 10;
+    if (movie.id < 100000) {
+      return 5;
+    } else if (movie.id >= 100000 && movie.id < 200000) {
+      return 3;
+    } else if (movie.id >= 200000 && movie.id < 300000) {
+      return 6;
+    } else if (movie.id >= 300000 && movie.id < 400000) {
+      return 2;
+    } else if (movie.id >= 400000 && movie.id < 500000) {
+      return 4;
+    } else if (movie.id >= 600000 && movie.id < 700000) {
+      return 2;
+    } else if (movie.id >= 800000 && movie.id < 900000) {
+      return 1;
+    } else if (movie.id >= 900000 && movie.id < 1000000) {
+      return 2;
     } else {
       return 6;
     }
@@ -61,26 +84,19 @@ class App extends React.Component {
       axios.spread((...res) => {
         const res1 = res[0];
         const res2 = res[1];
-        // const genres = new Map(
-        //   res2.data.genres.map((genre) => [genre.id, genre.name])
-        // );
+
         const genres = {};
         for (let i = 0; i < res2.data.genres.length; i++) {
           genres[res2.data.genres[i].id] = res2.data.genres[i].name;
         }
 
         const movies = res1.data.results;
-        // const movieStock = new Map(
-        //   movies.map((movie) => [movie.id, this.movieStock(movie)])
-        // );
+
         const stock = {};
         for (let i = 0; i < movies.length; i++) {
           stock[movies[i].id] = this.getMovieStock(movies[i]);
         }
 
-        // const moviePrices = new Map(
-        //   movies.map((movie) => [movie.id, this.moviePrice(movie)])
-        // );
         const prices = {};
         for (let i = 0; i < movies.length; i++) {
           prices[movies[i].id] = this.getMoviePrice(movies[i]);
@@ -113,7 +129,7 @@ class App extends React.Component {
           <h1 className="site-header">Secondhand Movies</h1>
         </div>
         <SearchBar onSubmit={this.onSearchInput} />
-        <Filter />
+        <Filter genres={this.state.genres} movies={this.state.movies} />
         <Basket prices={this.state.prices} cart={this.state.cart} />
 
         <MovieList
